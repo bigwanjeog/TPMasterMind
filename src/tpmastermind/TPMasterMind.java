@@ -5,33 +5,48 @@ package tpmastermind;
  */
 public class TPMasterMind {
 
-    static int[][] tMasterMind = {{3,2,2,1},{3,2,2,1}};
-    static int reponseOk = 1000;
+    static int[][] tMasterMind = {{2, 1, 1, 1}, {1, 1, 1, 2}};//premier dimension proposition et deuxieme solution
+    static int cptReponseOk = 1000;
+    static int cptBienPlacer = 0;
+    static int cptMalPlacer = 0;
 
     public static void main(String[] args) {
-        //TODO plusieurs fois la meme couleur
         System.out.println(verification());
     }
 
 
-
-
     public static String verification() {
-        int cptMalPlacer = 0;
-        int cptBienPlacer = 0;
-        for (int i = 0; i < tMasterMind[0].length; i++){
-            if(tMasterMind[0][i] == tMasterMind[1][i]){
-                cptBienPlacer++;
+        String retour;
+        verifBienPlacer();
+        verifMalPlacer();
+        retour = "Solution bien placé : " + cptBienPlacer + "\nSolution mal placé : " + cptMalPlacer;
+        return retour;
+    }
+
+    public static void verifBienPlacer() {
+        for (int i = 0; i < tMasterMind[0].length; i++) {
+            if (tMasterMind[0][i] == tMasterMind[1][i]) {
                 tMasterMind[0][i] = reponseOk();
                 tMasterMind[1][i] = reponseOk();
+                cptBienPlacer++;
             }
         }
+    }
 
-        return "Solution bien placé : " + cptBienPlacer + "\nSolution mal placé : " + cptMalPlacer;
+    public static void verifMalPlacer() {
+        for (int i = 0; i < tMasterMind[0].length; i++) {
+            for (int j = 0; j < tMasterMind[1].length; j++) {
+                if (tMasterMind[0][i] == tMasterMind[1][j]) {
+                    tMasterMind[0][i] = reponseOk();
+                    tMasterMind[1][j] = reponseOk();
+                    cptMalPlacer++;
+                }
+            }
+        }
     }
 
     public static int reponseOk() {
-        reponseOk++;
-        return reponseOk;
+        cptReponseOk++;
+        return cptReponseOk;
     }
 }
